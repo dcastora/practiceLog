@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class='hello'>
     <b-container>
       <b-row>
         <b-col>
@@ -8,28 +8,39 @@
       </b-row>
       <b-row>
         <b-col
-          cols="4">
-          <b-card no-body class="mb-1"
-            header="Add Assignment">
+          cols='4'>
+          <b-card no-body class='mb-1'
+            header='Add Assignment'>
             <b-card-body>
-              <b-form @submit="onSubmit">
-                <b-form-input id="exampleInput1"
-                    label="Title"
-                    type="text"
-                    required
-                    placeholder="Enter title">
+              <b-form @submit='onSubmit'>
+                <b-form-input id='title'
+                  label='Title'
+                  type='text'
+                  required
+                  v-model='title'
+                  placeholder='Enter Title'>
                 </b-form-input>
-                <b-button type="submit" class="mt-2" block variant="primary">Submit</b-button>
+                <b-form-input id='composer'
+                  class='mt-2'
+                  label='composer'
+                  type='composer'
+                  required
+                  v-model='composer'
+                  placeholder='Enter Composer'>
+                </b-form-input>
+                <b-button type='submit' class='mt-2' block variant='primary'>Submit</b-button>
               </b-form>
             </b-card-body>
           </b-card>
         </b-col>
         <b-col
-          cols="8">
-          <b-card title="Assignment 1"
-            tag="article"
-            class="mb-2">
-            <b-button href="www.google.com" variant="primary">Go somewhere</b-button>
+          cols='8'>
+          <b-card v-for='assignment in assignments' :key='assignment.id'
+            :title='assignment.title'
+            bg-variant='success'
+            text-variant='white'
+            class='mb-3'>
+            <p class="card-text">{{ assignment.composer }}</p>
           </b-card>
         </b-col>
       </b-row>      
@@ -39,14 +50,25 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'main',
   data () {
     return {
       user: 'Dylan',
-      skillBank: [intonation, articulation, timing],
-      form: {
-        title: ""
+      skillBank: ['intonation', 'articulation', 'timing'],
+      assignments: [],
+      title: '',
+      composer: ''
+    }
+  },
+  methods: {
+    onSubmit () {
+      let newAssignment = {
+        title: this.title,
+        composer: this.composer,
+        id: this.assignments.length + 1
       }
+      this.assignments.push(newAssignment)
+      console.log('yes')
     }
   }
 }
